@@ -1,0 +1,52 @@
+{{- if .Values.jupyter.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "rndflow-executor.fullname" . }}-jupyter-watcher
+  labels:
+    app: {{ include "rndflow-executor.fullname" . }}-jupyter-watcher
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "rndflow-executor.fullname" . }}-jupyter-watcher
+  replicas: {{ .Values.config.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "rndflow-executor.fullname" . }}-jupyter-watcher
+    spec:
+      serviceAccountName: {{ include "rndflow-executor.fullname" . }}-account
+      containers:
+        - name: jupyter-watcher
+          image: "{{ .Values.config.registry }}/{{ .Values.config.image }}"
+          command:
+            - "./boot.sh"
+            - "jupyter-watcher"
+          env:
+            - name: EXECUTOR_API_SERVER
+              value: {{ required ".Values.config.apiHost is required" .Values.config.apiHost }}
+            - name: EXECUTOR_LABEL
+              value: {{ .Values.config.executorLabel }}
+            - name: EXECUTOR_NAMESPACE
+              value: {{ .Release.Namespace | default "default" }}
+            - name: EXECUTOR_NODE_SELECTOR
+              value: {{ .Values.config.nodeSelector }}
+            - name: EXECUTOR_JOB_PREFIX
+              value: {{ .Release.Name }}-job
+            - name: PYTHONUNBUFFERED
+              value: "yes"
+            - name: EXECUTOR_JUPYTER_SVC
+              value: {{ include "rndflow-executor.fullname" . }}-jupyter-proxy-svc
+            - name: EXECUTOR_JUPYTER_IDLE_LIMIT
+              value: "{{ .Values.jupyter.idleLimit }}"
+          resources:
+{{ toYaml .Values.jupyter.resources | indent 12 }}
+          volumeMounts:
+            - name: key
+              mountPath: "/rndflow/private"
+              readOnly: true
+      volumes:
+        - name: key
+          secret:
+            secretName: {{ required ".Values.config.keySecret is required" .Values.config.keySecret }}
+{{- end}}

@@ -1,0 +1,94 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "rndflow-server.fullname" . }}-frontend-config
+data:
+  nginx.conf: |
+    user  nginx;
+    worker_processes  auto;
+    error_log  /dev/stderr warn;
+    pid        /var/run/nginx.pid;
+    events {
+      worker_connections  1024;
+    }
+    http {
+      include       /etc/nginx/mime.types;
+      default_type  application/octet-stream;
+      log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                        '$status $body_bytes_sent "$http_referer" '
+                        '"$http_user_agent" "$http_x_forwarded_for"';
+      access_log  /dev/stdout  main;
+      sendfile on;
+      keepalive_timeout  65;
+      client_max_body_size {{ default "128M" .Values.frontend.clientMaxBodySize }};
+
+      map $http_upgrade $connection_upgrade {
+        default upgrade;
+        '' close;
+      }
+
+      upstream api_server {
+        server {{ include "rndflow-server.fullname" . }}-api-svc:8000;
+      }
+
+      upstream docs_server {
+        server {{ include "rndflow-server.fullname" . }}-docs-svc:8080;
+      }
+
+      server {
+        listen       80;
+        server_name  localhost;
+
+        location / {
+          root   /app;
+          index  this-is-not-an-index.html;
+          try_files $uri @index;
+          gzip_static on;
+        }
+
+        location @index {
+          add_header Cache-Control no-cache;
+          expires 0;
+          root   /app;
+          try_files /index.html =404;
+          gzip_static on;
+        }
+
+        location /api/ {
+            proxy_set_header  Host $http_host;
+            proxy_set_header  X-Forwarded-Prefix /;
+            proxy_set_header  X-Real-IP $remote_addr;
+            proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header  X-Forwarded-Proto {{ default "$scheme" .Values.frontend.protocol }};
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection $connection_upgrade;
+
+            proxy_pass http://api_server/;
+            proxy_redirect off;
+            proxy_buffering off;
+            proxy_request_buffering off;
+            proxy_cache off;
+            proxy_set_header Connection '';
+            chunked_transfer_encoding off;
+
+            proxy_connect_timeout {{ default "300" .Values.frontend.proxyConnectTimeout }};
+            proxy_send_timeout    {{ default "300" .Values.frontend.proxySendTimeout }};
+            proxy_read_timeout    {{ default "300" .Values.frontend.proxyReadTimeout }};
+        }
+
+        location /docs/ {
+            proxy_set_header  Host $http_host;
+            proxy_set_header  X-Forwarded-Prefix /;
+            proxy_set_header  X-Real-IP $remote_addr;
+            proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header  X-Forwarded-Proto {{ default "$scheme" .Values.frontend.protocol }};
+
+            proxy_pass http://docs_server/;
+        }
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+          root   /usr/share/nginx/html;
+        }
+      }
+    }

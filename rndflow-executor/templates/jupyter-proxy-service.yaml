@@ -1,0 +1,18 @@
+{{- if .Values.jupyter.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "rndflow-executor.fullname" . }}-jupyter-proxy-svc
+spec:
+  selector:
+    app: {{ include "rndflow-executor.fullname" . }}-jupyter-proxy
+  ports:
+  - protocol: TCP
+    name: proxy
+    port: 8000
+    targetPort: proxy
+  - protocol: TCP
+    name: api
+    port: 8001
+    targetPort: api
+{{- end}}

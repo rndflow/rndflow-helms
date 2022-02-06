@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "rndflow-server.fullname" . }}-celery
+  labels:
+    app: {{ include "rndflow-server.fullname" . }}-celery
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "rndflow-server.fullname" . }}-celery
+  replicas: {{ .Values.celery.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "rndflow-server.fullname" . }}-celery
+    spec:
+      serviceAccountName: {{ include "rndflow-server.fullname" . }}-builder-account
+      containers:
+        - name: rndflow-celery
+          image: "{{ .Values.config.registry }}/{{ .Values.api.image }}"
+          command:
+            - './boot-celery.sh'
+          env:
+            - name: PYTHONUNBUFFERED
+              value: "yes"
+            - name: DATABASE_URI
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "rndflow-server.fullname" . }}-secrets
+                  key: databaseUri
+            - name: RABBITMQ_URI
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "rndflow-server.fullname" . }}-secrets
+                  key: rabbitmqUri
+            - name: ADMIN_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "rndflow-server.fullname" . }}-secrets
+                  key: adminEmail
+            - name: AUTHJWT_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "rndflow-server.fullname" . }}-secrets
+                  key: apiSecret
+            - name: RNDFLOW_API_SERVER
+              value: {{ include "rndflow-server.fullname" . }}-api-svc:8000
+            - name: BUILDER_NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: BUILDER_JOB_PREFIX
+              value: {{ .Values.builder.jobPrefix }}
+            - name: BUILDER_INIT_IMAGE
+              value: "{{ .Values.config.registry }}/{{ .Values.builder.image }}"
+            - name: MAIL_SERVER
+              value: {{  required ".Values.email.server is required" .Values.email.server }}
+            - name: MAIL_PORT
+              value: {{  required ".Values.email.port is required" .Values.email.port | quote }}
+            - name: MAIL_TLS
+              value: {{  required ".Values.email.tls is required" .Values.email.tls | quote }}
+            - name: MAIL_SSL
+              value: {{  required ".Values.email.ssl is required" .Values.email.ssl | quote }}
+            - name: USE_CREDENTIALS
+              value: {{  required ".Values.email.use_credentials is required" .Values.email.use_credentials | quote }}
+            - name: MAIL_FROM
+              value: {{  required ".Values.email.sender is required" .Values.email.sender }}
+            - name: MAIL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "rndflow-server.fullname" . }}-secrets
+                  key: email_username
+            - name: MAIL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "rndflow-server.fullname" . }}-secrets
+                  key: email_password
+          resources:
+{{ toYaml .Values.celery.resources | indent 12 }}
+

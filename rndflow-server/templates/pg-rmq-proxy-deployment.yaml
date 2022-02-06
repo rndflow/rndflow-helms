@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "rndflow-server.fullname" . }}-pg-rmq-proxy
+  labels:
+    app: {{ include "rndflow-server.fullname" . }}-pg-rmq-proxy
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "rndflow-server.fullname" . }}-pg-rmq-proxy
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ include "rndflow-server.fullname" . }}-pg-rmq-proxy
+    spec:
+      containers:
+        - name: rndnet-pg-rmq-proxy
+          image: "{{ .Values.config.registry }}/{{ .Values.pgRmqProxy.image }}"
+          env:
+            - name: PYTHONUNBUFFERED
+              value: "yes"
+            - name: DATABASE_URI
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "rndflow-server.fullname" . }}-secrets
+                  key: databaseUri
+            - name: RABBITMQ_URI
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "rndflow-server.fullname" . }}-secrets
+                  key: rabbitmqUri
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "rndflow-server.fullname" . }}-secrets
+                  key: apiSecret
+          resources:
+{{ toYaml .Values.pgRmqProxy.resources | indent 12 }}
+

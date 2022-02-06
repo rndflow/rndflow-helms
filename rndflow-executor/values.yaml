@@ -1,0 +1,54 @@
+# Default values for rndflow-executor.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+#
+config:
+  registry:
+  image: "rndflow/executor:latest"
+  replicas: 1
+  defaultJobImage: "rndflow/job.py:latest"
+  apiHost:
+  executorLabel:
+  keySecret:
+  nodeSelector:
+  gpuVendor: "nvidia"
+
+  resources: {}
+  #  requests:
+  #     cpu: 10m
+  #     memory: 32Mi
+  #  limits:
+  #     cpu: 100m
+  #     memory: 200Mi
+
+
+jupyter:
+  enabled: false
+  externalHost:
+  idleLimit: 24
+  ingress:
+    hostname:
+    path: /jupyter
+    tls:
+    # Secrets must be manually created in the namespace.
+    #  - secretName: rndflow-tls
+    #    hosts:
+    #    - rndflow.local
+    #
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-body-size: 128m
+  service:
+    type: ClusterIP
+    port: 8000
+    clusterIP:
+    nodePort:
+    externalIPs:
+  resources: {}
+  #  requests:
+  #     cpu: 10m
+  #     memory: 32Mi
+  #  limits:
+  #     cpu: 100m
+  #     memory: 200Mi
+
+

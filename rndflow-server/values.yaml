@@ -1,0 +1,125 @@
+# Default values for rndflow-server.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+config:
+  registry:
+  databaseUri:
+  rabbitmqUri:
+  adminEmail:
+
+api:
+  replicas: 1
+  image: "rndflow/api:latest"
+  secret:
+  resources: {}
+  #  requests:
+  #     cpu: 300m
+  #     memory: 500Mi
+  #  limits:
+  #     cpu: 4
+  #     memory: 10Gi
+
+
+celery:
+  replicas: 1
+  resources: {}
+  #  requests:
+  #     cpu: 100m
+  #     memory: 450Mi
+  #  limits:
+  #     cpu: 1
+  #     memory: 1Gi
+
+
+pgRmqProxy:
+  image: "rndflow/pg-rmq-proxy:latest"
+  resources: {}
+  #  requests:
+  #     cpu: 100m
+  #     memory: 100Mi
+  #  limits:
+  #     cpu: 1
+  #     memory: 1Gi
+
+
+frontend:
+  replicas: 1
+  image: "rndflow/client:latest"
+  ingress:
+    enabled: false
+    hostname:
+    annotations: {}
+    tls:
+    # Secrets must be manually created in the namespace.
+    # - secretName: rndflow-tls
+    #   hosts:
+    #     - rndflow.local
+  service:
+    type: ClusterIP
+    port: 8080
+    clusterIP:
+    nodePort:
+    externalIPs:
+  resources: {}
+  #  requests:
+  #     cpu: 200m
+  #     memory: 200Mi
+  #  limits:
+  #     cpu: 1
+  #     memory: 10Gi
+  init:
+    resources: {}
+    #  requests:
+    #     cpu: 200m
+    #     memory: 200Mi
+    #  limits:
+    #     cpu: 1
+    #     memory: 10Gi
+
+s3cleanup:
+  enabled: true
+  schedule: "@midnight"
+  resources: {}
+  #  requests:
+  #     cpu: 300m
+  #     memory: 500Mi
+  #  limits:
+  #     cpu: 2
+  #     memory: 2Gi
+
+
+builder:
+  jobPrefix: "rndflow-builder"
+  image: "rndflow/docker-init:latest"
+
+docs:
+  image: "rndflow/documentation:latest"
+  resources: {}
+  #  requests:
+  #     cpu: 200m
+  #     memory: 200Mi
+  #  limits:
+  #     cpu: 1
+  #     memory: 1Gi
+
+
+email:
+  server: "smtp.gmail.com"
+  port: 587
+  tls: true
+  ssl: false
+  use_credentials: true
+  username:
+  password:
+  sender:
+
+hostAliases: []
+#hostAliases:
+##- ip: "10.10.0.1"
+##  hostnames:
+##  - "host1"
+##- ip: "10.100.0.2"
+##  hostnames:
+##  - "host2"
+

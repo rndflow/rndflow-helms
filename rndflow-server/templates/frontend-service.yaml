@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "rndflow-server.fullname" . }}-frontend-svc
+spec:
+  selector:
+    app: {{ include "rndflow-server.fullname" . }}-frontend
+{{- if (or (eq .Values.frontend.service.type "ClusterIP" "") (empty .Values.frontend.service.type)) }}
+  type: ClusterIP
+  {{- if not (empty .Values.frontend.service.clusterIP) }}
+  clusterIP: {{ .Values.frontend.service.clusterIP }}
+  {{end}}
+{{- else if eq .Values.frontend.service.type "LoadBalancer" }}
+  type: {{ .Values.frontend.service.type }}
+  loadBalancerIP: {{ default "" .Values.frontend.service.loadBalancerIP }}
+{{- else }}
+  type: {{ .Values.frontend.service.type }}
+{{- end }}
+  ports:
+    - port: {{ .Values.frontend.service.port }}
+      protocol: TCP
+{{- if (and (eq .Values.frontend.service.type "NodePort") ( .Values.frontend.service.nodePort)) }}
+      nodePort: {{ .Values.frontend.service.nodePort }}
+{{- else }}
+      targetPort: 80
+{{- end}}
+{{- if .Values.frontend.service.externalIPs }}
+  externalIPs:
+{{- range $i , $ip := .Values.frontend.service.externalIPs }}
+  - {{ $ip }}
+{{- end }}
+{{- end }}

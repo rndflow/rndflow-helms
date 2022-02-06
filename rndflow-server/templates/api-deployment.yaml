@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "rndflow-server.fullname" . }}-api
+  labels:
+    app: {{ include "rndflow-server.fullname" . }}-api
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "rndflow-server.fullname" . }}-api
+  replicas: {{ .Values.api.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "rndflow-server.fullname" . }}-api
+    spec:
+      containers:
+        - name: rndflow-api
+          image: "{{ .Values.config.registry }}/{{ .Values.api.image }}"
+          command:
+            - './boot.sh'
+          env:
+            - name: PYTHONUNBUFFERED
+              value: "yes"
+            - name: API_REQUEST_TIMEOUT
+              value: '{{ default "600" .Values.api.requestTimeout }}'
+            - name: DATABASE_URI
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "rndflow-server.fullname" . }}-secrets
+                  key: databaseUri
+            - name: RABBITMQ_URI
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "rndflow-server.fullname" . }}-secrets
+                  key: rabbitmqUri
+            - name: ADMIN_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "rndflow-server.fullname" . }}-secrets
+                  key: adminEmail
+            - name: AUTHJWT_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "rndflow-server.fullname" . }}-secrets
+                  key: apiSecret
+            - name: MAIL_SERVER
+              value: {{  required ".Values.email.server is required" .Values.email.server }}
+            - name: MAIL_PORT
+              value: {{  required ".Values.email.port is required" .Values.email.port | quote }}
+            - name: MAIL_TLS
+              value: {{  required ".Values.email.tls is required" .Values.email.tls | quote }}
+            - name: MAIL_FROM
+              value: {{  required ".Values.email.sender is required" .Values.email.sender }}
+            - name: MAIL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "rndflow-server.fullname" . }}-secrets
+                  key: email_username
+            - name: MAIL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "rndflow-server.fullname" . }}-secrets
+                  key: email_password
+          lifecycle:
+            preStop:
+              exec:
+                command: ['/bin/bash', '-c', 'kill -SIGTERM $(cat /rndflow/pid)']
+          resources:
+{{ toYaml .Values.celery.resources | indent 12 }}
+          ports:
+            - name: http
+              containerPort: 8000
+      {{- if .Values.hostAliases }}
+      hostAliases:
+        {{- toYaml .Values.hostAliases | nindent 8 }}
+      {{- end }}

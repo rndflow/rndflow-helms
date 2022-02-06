@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "rndflow-server.fullname" . }}-frontend
+  labels:
+    app: {{ include "rndflow-server.fullname" . }}-frontend
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "rndflow-server.fullname" . }}-frontend
+  replicas: {{ .Values.frontend.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "rndflow-server.fullname" . }}-frontend
+    spec:
+      containers:
+        - name: nginx
+          image: "{{ .Values.config.registry }}/{{ .Values.frontend.image }}"
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/usr/sbin/nginx","-s","quit"]
+          volumeMounts:
+            - name: config
+              mountPath: "/etc/nginx/nginx.conf"
+              subPath: "nginx.conf"
+          resources:
+{{ toYaml .Values.frontend.resources | indent 12 }}
+      initContainers:
+        - name: check-api
+          image: curlimages/curl
+          command: ['curl', '--retry-all-errors', '--retry', '100', '--retry-delay', '1', 'http://{{ include "rndflow-server.fullname" . }}-api-svc:8000/status']
+          resources:
+{{ toYaml .Values.frontend.init.resources | indent 12 }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ include "rndflow-server.fullname" . }}-frontend-config
+
+

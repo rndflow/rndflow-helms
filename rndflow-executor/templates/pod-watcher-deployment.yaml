@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "rndflow-executor.fullname" . }}-pod-watcher
+  labels:
+    app: {{ include "rndflow-executor.fullname" . }}-pod-watcher
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "rndflow-executor.fullname" . }}-pod-watcher
+  replicas: {{ .Values.config.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "rndflow-executor.fullname" . }}-pod-watcher
+    spec:
+      serviceAccountName: {{ include "rndflow-executor.fullname" . }}-account
+      containers:
+        - name: pod-watcher
+          image: "{{ .Values.config.registry }}/{{ .Values.config.image }}"
+          command:
+            - "./boot.sh"
+            - "pod-watcher"
+          env:
+            - name: EXECUTOR_API_SERVER
+              value: {{ required ".Values.config.apiHost is required" .Values.config.apiHost }}
+            - name: EXECUTOR_LABEL
+              value: {{ .Values.config.executorLabel }}
+            - name: EXECUTOR_NAMESPACE
+              value: {{ .Release.Namespace | default "default" }}
+            - name: EXECUTOR_NODE_SELECTOR
+              value: {{ .Values.config.nodeSelector }}
+            - name: EXECUTOR_JOB_PREFIX
+              value: {{ .Release.Name }}-job
+            - name: PYTHONUNBUFFERED
+              value: "yes"
+            {{- if .Values.jupyter.enabled }}
+            - name: EXECUTOR_JUPYTER_SVC
+              value: {{ include "rndflow-executor.fullname" . }}-jupyter-proxy-svc
+            - name: EXECUTOR_JUPYTER_HOST
+              value: {{ required ".Values.jupyter.externalHost is required" .Values.jupyter.externalHost }}
+            - name: EXECUTOR_JUPYTER_PATH
+              value: {{ required ".Values.jupyter.ingress.path is required" .Values.jupyter.ingress.path }}
+            {{- end }}
+          resources:
+{{ toYaml .Values.config.resources | indent 12 }}
+          volumeMounts:
+            - name: key
+              mountPath: "/rndflow/private"
+              readOnly: true
+      volumes:
+        - name: key
+          secret:
+            secretName: {{ required ".Values.config.keySecret is required" .Values.config.keySecret }}

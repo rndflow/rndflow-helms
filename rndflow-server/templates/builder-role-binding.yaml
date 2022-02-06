@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "rndflow-server.fullname" . }}-builder-role-binding
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "rndflow-server.fullname" . }}-builder-account
+    namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: ClusterRole
+  name: {{ include "rndflow-server.fullname" . }}-builder-role
+  apiGroup: rbac.authorization.k8s.io

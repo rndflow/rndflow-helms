@@ -1,0 +1,35 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "rndflow-executor.fullname" . }}-role
+rules:
+  - apiGroups: ["batch"]
+    resources:
+      - jobs
+    verbs:
+      - list
+      - get
+      - create
+      - delete
+  - apiGroups: [""]
+    resources:
+      - pods
+    verbs:
+      - list
+      - watch
+  - apiGroups: [""]
+    resources:
+      - pods/log
+    verbs:
+      - get
+  - apiGroups: [""]
+    resources:
+      - events
+    verbs:
+      - list
+      - watch
+  - apiGroups: ["metrics.k8s.io"]
+    resources:
+      - nodes
+    verbs:
+      - list

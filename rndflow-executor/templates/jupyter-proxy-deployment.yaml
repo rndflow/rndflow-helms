@@ -1,0 +1,29 @@
+{{- if .Values.jupyter.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "rndflow-executor.fullname" . }}-jupyter-proxy
+  labels:
+    app: {{ include "rndflow-executor.fullname" . }}-jupyter-proxy
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "rndflow-executor.fullname" . }}-jupyter-proxy
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ include "rndflow-executor.fullname" . }}-jupyter-proxy
+    spec:
+      containers:
+        - name: jupyter-proxy
+          image: "jupyterhub/configurable-http-proxy"
+          ports:
+            - name: proxy
+              containerPort: 8000
+            - name: api
+              containerPort: 8001
+          resources:
+{{ toYaml .Values.jupyter.resources | indent 12 }}
+
+{{- end}}

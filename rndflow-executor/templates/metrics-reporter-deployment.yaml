@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "rndflow-executor.fullname" . }}-metrics-reporter
+  labels:
+    app: {{ include "rndflow-executor.fullname" . }}-metrics-reporter
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "rndflow-executor.fullname" . }}-metrics-reporter
+  replicas: {{ .Values.config.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "rndflow-executor.fullname" . }}-metrics-reporter
+    spec:
+      serviceAccountName: {{ include "rndflow-executor.fullname" . }}-account
+      containers:
+        - name: metrics-reporter
+          image: "{{ .Values.config.registry }}/{{ .Values.config.image }}"
+          command:
+            - "./boot.sh"
+            - "metrics-reporter"
+          env:
+            - name: EXECUTOR_API_SERVER
+              value: {{ required ".Values.config.apiHost is required" .Values.config.apiHost }}
+            - name: EXECUTOR_LABEL
+              value: {{ .Values.config.executorLabel }}
+            - name: EXECUTOR_NAMESPACE
+              value: {{ .Release.Namespace | default "default" }}
+            - name: EXECUTOR_NODE_SELECTOR
+              value: {{ .Values.config.nodeSelector }}
+            - name: EXECUTOR_JOB_PREFIX
+              value: {{ .Release.Name }}-job
+            - name: PYTHONUNBUFFERED
+              value: "yes"
+          resources:
+{{ toYaml .Values.config.resources | indent 12 }}
+          volumeMounts:
+            - name: key
+              mountPath: "/rndflow/private"
+              readOnly: true
+      volumes:
+        - name: key
+          secret:
+            secretName: {{ required ".Values.config.keySecret is required" .Values.config.keySecret }}

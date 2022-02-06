@@ -1,0 +1,37 @@
+{{- if .Values.frontend.ingress.enabled -}}
+{{- if .Capabilities.APIVersions.Has "networking.k8s.io/v1" -}}
+apiVersion: networking.k8s.io/v1
+{{- else }}
+apiVersion: networking.k8s.io/v1beta1
+{{- end}}
+kind: Ingress
+metadata:
+  name: {{ include "rndflow-server.fullname" . }}-frontend-ingress
+{{- with .Values.frontend.ingress.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+{{- if .Values.frontend.ingress.tls }}
+  tls:
+{{ toYaml .Values.frontend.ingress.tls | indent 4 }}
+{{- end }}
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              {{- if .Capabilities.APIVersions.Has "networking.k8s.io/v1" }}
+              service:
+                name: {{ include "rndflow-server.fullname" . }}-frontend-svc
+                port:
+                  number: {{ .Values.frontend.service.port }}
+              {{- else }}
+              serviceName: {{ include "rndflow-server.fullname" . }}-frontend-svc
+              servicePort: {{ .Values.frontend.service.port }}
+              {{-  end }}
+      {{- if .Values.frontend.ingress.hostname }}
+      host: {{ .Values.frontend.ingress.hostname | quote }}
+      {{- end }}
+{{- end}}

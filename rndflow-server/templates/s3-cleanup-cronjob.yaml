@@ -1,0 +1,39 @@
+{{- if .Values.s3cleanup.enabled -}}
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ include "rndflow-server.fullname" . }}-s3cleanup
+spec:
+  schedule: "{{ .Values.s3cleanup.schedule }}"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: rndflow-api
+              image: "{{ .Values.config.registry }}/{{ .Values.api.image }}"
+              command:
+                - './run_s3_cleanup.sh'
+              env:
+                - name: PYTHONUNBUFFERED
+                  value: "yes"
+                - name: DATABASE_URI
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ include "rndflow-server.fullname" . }}-secrets
+                      key: databaseUri
+                - name: RABBITMQ_URI
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ include "rndflow-server.fullname" . }}-secrets
+                      key: rabbitmqUri
+                - name: AUTHJWT_SECRET_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ include "rndflow-server.fullname" . }}-secrets
+                      key: apiSecret
+              resources:
+{{ toYaml .Values.s3cleanup.resources | indent 16 }}
+
+{{- end}}
