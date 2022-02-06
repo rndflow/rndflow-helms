@@ -27,7 +27,7 @@ Full installation instuction available [here](https://github.com/rndflow/rndflow
 
     $ kubectl create secret generic my-executor-release-access-key --from-file=key="executor.key"
 
-    $ helm repo add rndflow  https://rep.rndflow.com/helm/
+    $ helm repo add rndflow https://rndflow.github.io/rndflow-helms/ 
 
     $ helm install my-executor-release rndflow/rndflow-executor \
       --set config.registry="docker.io" \

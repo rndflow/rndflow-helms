@@ -26,7 +26,7 @@ Full installation instuction available [here](https://github.com/rndflow/rndflow
 To install the chart with the release name `my-release`:
 
 ```console
-$ helm repo add rndflow  https://rep.rndflow.com/helm/
+$ helm repo add rndflow https://rndflow.github.io/rndflow-helms/
 
 $ helm install my-release rndflow/rndflow-server \
     --set config.registry=docker.io/ \
