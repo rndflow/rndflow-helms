@@ -46,6 +46,8 @@ pgRmqProxy:
 frontend:
   replicas: 1
   image: "rndflow/client:latest"
+  # Enable root image user  
+  imageRootMode: "true" 
   ingress:
     enabled: false
     hostname:
