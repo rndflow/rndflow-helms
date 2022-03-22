@@ -66,6 +66,24 @@ data:
           gzip_static on;
         }
 
+        location /logo.svg {
+          root   /app;
+          try_files /logo.svg =404;
+          gzip_static on;
+        }
+
+        location /left-footer {
+          root   /app;
+          try_files /left-footer =404;
+          gzip_static on;
+        }
+
+        location /right-footer {
+          root   /app;
+          try_files /right-footer =404;
+          gzip_static on;
+        }
+
         location @index {
           add_header Cache-Control no-cache;
           expires 0;
