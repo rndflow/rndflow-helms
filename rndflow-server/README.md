@@ -38,7 +38,10 @@ $ helm install my-release rndflow/rndflow-server \
     --set frontend.ingress.hostname=hostname \
     --set email.username=user@gmail.com \
     --set email.password=****** \
-    --set email.sender=user@gmail.com
+    --set email.sender=user@gmail.com \
+    --set-file logo="/path/to/custom-logo.svg" \
+    --set-file leftFooter="/path/to/custom-left-footer.txt" \
+    --set-file rightFooter="/path/to/custom-right-footer.txt"
 ```
 
 The command deploys R&D Flow Server on the Kubernetes cluster in the default configuration. The [Parameters](#parameters) section lists the parameters that can be configured during installation.

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "rndflow-server.fullname" . }}-branding-config
+data:
+{{ if .Values.logo }}
+  logo.svg: |
+{{ .Values.logo | indent 4 }}
+{{ end }}
+{{ if .Values.leftFooter }}
+  leftFooter: |
+{{ .Values.leftFooter | indent 4 }}
+{{ end }}
+{{ if .Values.rightFooter }}
+  rightFooter: |
+{{ .Values.rightFooter | indent 4 }}
+{{ end }}

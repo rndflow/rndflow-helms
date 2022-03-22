@@ -25,6 +25,21 @@ spec:
             - name: config
               mountPath: "/etc/nginx/nginx.conf"
               subPath: "nginx.conf"
+{{ if .Values.logo }}
+            - name: branding
+              mountPath: "/app/logo.svg"
+              subPath: "logo.svg"
+{{ end }}
+{{ if .Values.leftFooter }}
+            - name: branding
+              mountPath: "/app/left-footer"
+              subPath: "leftFooter"
+{{ end }}
+{{ if .Values.rightFooter }}
+            - name: branding
+              mountPath: "/app/right-footer"
+              subPath: "rightFooter"
+{{ end }}
           resources:
 {{ toYaml .Values.frontend.resources | indent 12 }}
       initContainers:
@@ -37,5 +52,6 @@ spec:
         - name: config
           configMap:
             name: {{ include "rndflow-server.fullname" . }}-frontend-config
-
-
+        - name: branding
+          configMap:
+            name: {{ include "rndflow-server.fullname" . }}-branding-config
