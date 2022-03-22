@@ -50,7 +50,7 @@ frontend:
   replicas: 1
   image: "rndflow/client:latest"
   # Enable root image user  
-  imageRootMode: "false" 
+  imageRootMode: false 
   ingress:
     enabled: false
     hostname:
