@@ -16,6 +16,10 @@ spec:
         app: {{ include "rndflow-executor.fullname" . }}-event-watcher
     spec:
       serviceAccountName: {{ include "rndflow-executor.fullname" . }}-account
+      {{ if .Values.config.imagePullSecret }}
+      imagePullSecrets:
+        - name: "{{ .Values.config.imagePullSecret }}"
+      {{ end }}
       containers:
         - name: event-watcher
           image: "{{ .Values.config.registry }}/{{ .Values.config.image }}"

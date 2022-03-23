@@ -10,6 +10,7 @@ config:
   logo:
   leftFooter:
   rightFooter:
+  #imagePullSecret: dockercred
 
 api:
   replicas: 1

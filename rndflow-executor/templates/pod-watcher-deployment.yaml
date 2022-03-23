@@ -15,6 +15,10 @@ spec:
         app: {{ include "rndflow-executor.fullname" . }}-pod-watcher
     spec:
       serviceAccountName: {{ include "rndflow-executor.fullname" . }}-account
+      {{ if .Values.config.imagePullSecret }}
+      imagePullSecrets:
+        - name: "{{ .Values.config.imagePullSecret }}"
+      {{ end }}
       containers:
         - name: pod-watcher
           image: "{{ .Values.config.registry }}/{{ .Values.config.image }}"

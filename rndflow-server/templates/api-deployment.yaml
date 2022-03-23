@@ -14,6 +14,10 @@ spec:
       labels:
         app: {{ include "rndflow-server.fullname" . }}-api
     spec:
+      {{ if .Values.config.imagePullSecret }}
+      imagePullSecrets:
+        - name: "{{ .Values.config.imagePullSecret }}"
+      {{ end }}
       containers:
         - name: rndflow-api
           image: "{{ .Values.config.registry }}/{{ .Values.api.image }}"

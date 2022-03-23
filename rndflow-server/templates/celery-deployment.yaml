@@ -15,6 +15,10 @@ spec:
         app: {{ include "rndflow-server.fullname" . }}-celery
     spec:
       serviceAccountName: {{ include "rndflow-server.fullname" . }}-builder-account
+      {{ if .Values.config.imagePullSecret }}
+      imagePullSecrets:
+        - name: "{{ .Values.config.imagePullSecret }}"
+      {{ end }}
       containers:
         - name: rndflow-celery
           image: "{{ .Values.config.registry }}/{{ .Values.api.image }}"

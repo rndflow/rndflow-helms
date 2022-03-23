@@ -12,6 +12,7 @@ config:
   keySecret:
   nodeSelector:
   gpuVendor: "nvidia"
+  #imagePullSecret: dockercred
 
   resources: {}
   #  requests:
