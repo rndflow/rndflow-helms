@@ -52,4 +52,7 @@ jupyter:
   #     cpu: 100m
   #     memory: 200Mi
 
-
+priority:
+  low: 1000
+  normal: 10000
+  high: 100000

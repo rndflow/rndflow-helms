@@ -40,6 +40,12 @@ spec:
               value: {{ .Values.config.gpuVendor }}
             - name: EXECUTOR_DEFAULT_JOB_IMAGE
               value: {{ .Values.config.defaultJobImage }}
+            - name: EXECUTOR_LOW_PRIORITY
+              value: {{ include "rndflow-executor.fullname" . }}-low-priority
+            - name: EXECUTOR_NORMAL_PRIORITY
+              value: {{ include "rndflow-executor.fullname" . }}-normal-priority
+            - name: EXECUTOR_HIGH_PRIORITY
+              value: {{ include "rndflow-executor.fullname" . }}-high-priority
             - name: PYTHONUNBUFFERED
               value: "yes"
             {{- if .Values.jupyter.enabled }}

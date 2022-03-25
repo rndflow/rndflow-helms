@@ -1,0 +1,7 @@
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: {{ include "rndflow-executor.fullname" . }}-low-priority
+value: {{ .Values.priority.low }}
+preemptionPolicy: Never
+globalDefault: false
