@@ -29,17 +29,17 @@ spec:
             - name: config
               mountPath: "/etc/nginx/nginx.conf"
               subPath: "nginx.conf"
-{{ if .Values.logo }}
+{{ if .Values.config.logo }}
             - name: branding
               mountPath: "/app/logo.svg"
               subPath: "logo.svg"
 {{ end }}
-{{ if .Values.leftFooter }}
+{{ if .Values.config.leftFooter }}
             - name: branding
               mountPath: "/app/left-footer"
               subPath: "leftFooter"
 {{ end }}
-{{ if .Values.rightFooter }}
+{{ if .Values.config.rightFooter }}
             - name: branding
               mountPath: "/app/right-footer"
               subPath: "rightFooter"

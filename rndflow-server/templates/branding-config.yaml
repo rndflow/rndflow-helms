@@ -3,15 +3,15 @@ kind: ConfigMap
 metadata:
   name: {{ include "rndflow-server.fullname" . }}-branding-config
 data:
-{{ if .Values.logo }}
+{{ if .Values.config.logo }}
   logo.svg: |
-{{ .Values.logo | indent 4 }}
+{{ .Values.config.logo | indent 4 }}
 {{ end }}
-{{ if .Values.leftFooter }}
+{{ if .Values.config.leftFooter }}
   leftFooter: |
-{{ .Values.leftFooter | indent 4 }}
+{{ .Values.config.leftFooter | indent 4 }}
 {{ end }}
-{{ if .Values.rightFooter }}
+{{ if .Values.config.rightFooter }}
   rightFooter: |
-{{ .Values.rightFooter | indent 4 }}
+{{ .Values.config.rightFooter | indent 4 }}
 {{ end }}

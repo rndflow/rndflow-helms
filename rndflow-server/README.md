@@ -12,10 +12,10 @@ This chart bootstraps a  [R&D Flow Server](https://server.rndflow.com/) deployme
 - Helm 3.1.0
 - PostgreSQL server must be installed.
 - RabbitMQ server must be installed.
-- MinIO storage server must be installed.
+- MinIO or S3 compatible storage server must be installed.
 - Ingress Nginx controller is required.
 - Valid internet hostname identity certificate (for example, Let’s Encrypt) for Ingress Nginx controller is recommended.
-- PV provisioner support in the underlying infrastructure
+- PV/PVC provisioner support in the underlying infrastructure
 
 Installation instuctions available [here](https://github.com/rndflow/rndflow-install/README.md).
 
@@ -39,12 +39,14 @@ $ helm install my-release rndflow/rndflow-server \
     --set email.username=user@gmail.com \
     --set email.password=****** \
     --set email.sender=user@gmail.com \
-    --set-file logo="/path/to/custom-logo.svg" \
-    --set-file leftFooter="/path/to/custom-left-footer.txt" \
-    --set-file rightFooter="/path/to/custom-right-footer.txt"
+    --set-file config.logo="/path/to/custom-logo.svg" \
+    --set-file config.leftFooter="/path/to/custom-left-footer.txt" \
+    --set-file config.rightFooter="/path/to/custom-right-footer.txt"
 ```
 
 The command deploys R&D Flow Server on the Kubernetes cluster in the default configuration. The [Parameters](#parameters) section lists the parameters that can be configured during installation.
+
+> **Tip**: logo, lefgtFooter and rightFooter parameters are optinal.
 
 > **Tip**: List all releases using `helm list`
 
@@ -66,6 +68,9 @@ $ helm delete my-release
 |`config.databaseUri`                           | Database URI                                                                                                                                              |``                           |
 |`config.rabbitmqUri`                           | RabbitMQ URI                                                                                                                                              |``                           |
 |`config.adminEmail`                            | Admins email                                                                                                                                              |``                           |
+|`config.logo                                   | Server logo svg file                                                                                                                                      |``                           |
+|`config.leftFooter`                            | Custom left bottom footer txt file                                                                                                                        |``                           |
+|`config.rightFooter`                           | Custom right bottom footer txt file                                                                                                                       |``                           |
 |`api.replicas`                                 | Number of API Serversreplicas to deploy                                                                                                                   |`1`                          |
 |`api.image`                                    | API Server image                                                                                                                                          |`rndflow/api:latest`         |
 |`api.secret`                                   | API Server secret                                                                                                                                         |``                           |
@@ -90,6 +95,7 @@ $ helm delete my-release
 |`email.username`                               | Username for email, some email hosts separates username from the default sender(AWS).                                                                     |``                           |
 |`email.password`                               | Password for authentication                                                                                                                               |``                           |
 |`email.sender`                                 | Sender address                                                                                                                                            |``                           |
-|`hostAliases`                                  | Deployment pod host aliases                                                                                                                               |`[]`                         |
+|`hostAliases`                                  | Deployment pod host aliases                                                                                                                               |``                           |
+
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
