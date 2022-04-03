@@ -23,6 +23,7 @@ spec:
       containers:
         - name: event-watcher
           image: "{{ .Values.config.registry }}/{{ .Values.config.image }}"
+          imagePullPolicy: {{.Values.config.imagePullPolicy }}  
           command:
             - "./boot.sh"
             - "event-watcher"

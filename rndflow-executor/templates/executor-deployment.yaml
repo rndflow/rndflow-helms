@@ -22,6 +22,7 @@ spec:
       containers:
         - name: executor
           image: "{{ .Values.config.registry }}/{{ .Values.config.image }}"
+          imagePullPolicy: {{.Values.config.imagePullPolicy }}  
           command:
             - "./boot.sh"
             - "executor"

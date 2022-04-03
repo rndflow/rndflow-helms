@@ -13,6 +13,7 @@ config:
   nodeSelector:
   gpuVendor: "nvidia"
   #imagePullSecret: dockercred
+  imagePullPolicy: "Always"
 
   resources: {}
   #  requests:

@@ -22,6 +22,7 @@ spec:
       containers:
         - name: metrics-reporter
           image: "{{ .Values.config.registry }}/{{ .Values.config.image }}"
+          imagePullPolicy: {{.Values.config.imagePullPolicy }}  
           command:
             - "./boot.sh"
             - "metrics-reporter"

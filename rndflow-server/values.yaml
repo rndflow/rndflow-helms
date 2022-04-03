@@ -11,6 +11,7 @@ config:
   leftFooter:
   rightFooter:
   #imagePullSecret: dockercred
+  imagePullPolicy: "Always"
 
 api:
   replicas: 1

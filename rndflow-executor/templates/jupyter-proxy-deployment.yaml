@@ -22,6 +22,7 @@ spec:
       containers:
         - name: jupyter-proxy
           image: "jupyterhub/configurable-http-proxy"
+          imagePullPolicy: {{.Values.config.imagePullPolicy }}
           ports:
             - name: proxy
               containerPort: 8000

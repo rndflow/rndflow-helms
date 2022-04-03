@@ -21,6 +21,7 @@ spec:
       containers:
         - name: rndnet-pg-rmq-proxy
           image: "{{ .Values.config.registry }}/{{ .Values.pgRmqProxy.image }}"
+          imagePullPolicy: {{.Values.config.imagePullPolicy }}
           env:
             - name: PYTHONUNBUFFERED
               value: "yes"

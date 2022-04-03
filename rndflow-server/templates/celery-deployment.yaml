@@ -22,6 +22,7 @@ spec:
       containers:
         - name: rndflow-celery
           image: "{{ .Values.config.registry }}/{{ .Values.api.image }}"
+          imagePullPolicy: {{.Values.config.imagePullPolicy }}  
           command:
             - './boot-celery.sh'
           env:

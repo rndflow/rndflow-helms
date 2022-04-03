@@ -23,6 +23,7 @@ spec:
       containers:
         - name: jupyter-watcher
           image: "{{ .Values.config.registry }}/{{ .Values.config.image }}"
+          imagePullPolicy: {{.Values.config.imagePullPolicy }}
           command:
             - "./boot.sh"
             - "jupyter-watcher"

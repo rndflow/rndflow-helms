@@ -21,6 +21,7 @@ spec:
       containers:
         - name: rndflow-api
           image: "{{ .Values.config.registry }}/{{ .Values.api.image }}"
+          imagePullPolicy: {{ .Values.config.imagePullPolicy }}
           command:
             - './boot.sh'
           env:
