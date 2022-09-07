@@ -19,7 +19,7 @@ spec:
         - name: "{{ .Values.config.imagePullSecret }}"
       {{ end }}
       containers:
-        - name: rndnet-pg-rmq-proxy
+        - name: rndflow-pg-rmq-proxy
           image: "{{ .Values.config.registry }}/{{ .Values.pgRmqProxy.image }}"
           imagePullPolicy: {{.Values.config.imagePullPolicy }}
           env:
