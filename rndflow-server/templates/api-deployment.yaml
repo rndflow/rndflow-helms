@@ -29,6 +29,8 @@ spec:
               value: "yes"
             - name: API_REQUEST_TIMEOUT
               value: '{{ default "600" .Values.api.requestTimeout }}'
+            - name: API_WORKERS
+              value: '{{ default "4" .Values.api.workers }}'
             - name: DATABASE_URI
               valueFrom:
                 secretKeyRef:

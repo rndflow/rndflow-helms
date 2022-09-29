@@ -15,6 +15,7 @@ config:
 
 api:
   replicas: 1
+  workers: 4 
   image: "rndflow/api:latest"
   secret:
   resources: {}
