@@ -23,6 +23,13 @@ config:
   #     cpu: 100m
   #     memory: 200Mi
 
+  storage: {}
+  #  create_pod_pvc: false
+  #  use_subpath: false
+  #  access_modes: "ReadWriteOnce"
+  #  pod_pvc_storage_class: "standard"
+  #  pod_pvc_request_storage_size: "1Gi"
+
 
 jupyter:
   enabled: false

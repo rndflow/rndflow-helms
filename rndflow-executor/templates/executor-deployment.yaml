@@ -22,7 +22,7 @@ spec:
       containers:
         - name: executor
           image: "{{ .Values.config.registry }}/{{ .Values.config.image }}"
-          imagePullPolicy: {{.Values.config.imagePullPolicy }}  
+          imagePullPolicy: {{.Values.config.imagePullPolicy }}
           command:
             - "./boot.sh"
             - "executor"
@@ -49,6 +49,28 @@ spec:
               value: {{ include "rndflow-executor.fullname" . }}-high-priority
             - name: PYTHONUNBUFFERED
               value: "yes"
+
+            {{- if .Values.config.storage.create_pod_pvc }}
+            - name: EXECUTOR_CREATE_POD_PVC
+              value: "{{ .Values.config.storage.create_pod_pvc }}"
+            {{- end }}
+            {{- if .Values.config.storage.use_subpath }}
+            - name: EXECUTOR_USE_SUBPATH
+              value: "{{ .Values.config.storage.use_subpath }}"
+            {{- end }}
+            {{- if .Values.config.storage.access_modes }}
+            - name: EXECUTOR_ACCESS_MODES
+              value: {{ .Values.config.storage.access_modes }}
+            {{- end }}
+            {{- if .Values.config.storage.pod_pvc_storage_class }}
+            - name: EXECUTOR_POD_PVC_STORAGE_CLASS
+              value: {{ .Values.config.storage.pod_pvc_storage_class }}
+            {{- end }}
+            {{- if .Values.config.storage.pod_pvc_request_storage_size }}
+            - name: EXECUTOR_POD_PVC_REQUEST_STORAGE_SIZE
+              value: {{ .Values.config.storage.pod_pvc_request_storage_size }}
+            {{- end }}
+
             {{- if .Values.jupyter.enabled }}
             - name: EXECUTOR_JUPYTER_ENABLED
               value: "{{ .Values.jupyter.enabled }}"
