@@ -14,6 +14,16 @@ entries:
   rndflow-server:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2022-12-05T15:04:57.189328568Z"
+    description: A Helm chart for Kubernetes
+    digest: d4822d6571378b99afac1919ae48219d6c6280b07eee640ce927f5bad295f638
+    name: rndflow-server
+    type: application
+    urls:
+    - https://github.com/rndflow/rndflow-helms/releases/download/rndflow-server-0.1.1/rndflow-server-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2022-02-06T15:43:44.451541112Z"
     description: A Helm chart for Kubernetes
     digest: e36e94ba580f7987e7fdc49aed69188219a5cb7764bbee71c60d03d8575388fd
@@ -22,4 +32,4 @@ entries:
     urls:
     - https://github.com/rndflow/rndflow-helms/releases/download/rndflow-server-0.1.0/rndflow-server-0.1.0.tgz
     version: 0.1.0
-generated: "2022-02-06T15:43:44.451550512Z"
+generated: "2022-12-05T15:04:57.189337869Z"
