@@ -6,7 +6,7 @@
 
 This chart bootstraps a  [R&D Flow Server](https://server.rndflow.com/) deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
-## Installation prerequisites
+## Installation prerequisites1
 
 - Kubernetes 1.19+
 - Helm 3.1.0
