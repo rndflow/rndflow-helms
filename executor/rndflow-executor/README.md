@@ -8,7 +8,7 @@ This chart bootstraps a  [R&D Flow executor](https://server.rndflow.com/) deploy
 
 ## Prerequisites
 
-- Kubernetes 1.19+
+- Kubernetes 1.20+
 - Helm 3.1.0
 
 ## Installing the Chart
