@@ -8,7 +8,7 @@ This chart bootstraps a  [R&D Flow Server](https://server.rndflow.com/) deployme
 
 ## Installation prerequisites
 
-- Kubernetes 1.19+
+- Kubernetes 1.20+
 - Helm 3.1.0
 - PostgreSQL server must be installed.
 - RabbitMQ server must be installed.
