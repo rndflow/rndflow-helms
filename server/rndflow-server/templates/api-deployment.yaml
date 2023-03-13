@@ -18,6 +18,9 @@ spec:
       imagePullSecrets:
         - name: "{{ .Values.config.imagePullSecret }}"
       {{ end }}
+      {{ if .Values.config.priorityClassName }}
+      priorityClassName: "{{ .Values.config.priorityClassName }}"
+      {{ end }}
       containers:
         - name: rndflow-api
           image: "{{ .Values.config.registry }}/{{ .Values.api.image }}"

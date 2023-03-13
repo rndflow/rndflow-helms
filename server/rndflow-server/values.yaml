@@ -11,6 +11,7 @@ config:
   leftFooter:
   rightFooter:
   #imagePullSecret: dockercred
+  #priorityClassName: "system-cluster-critical"
   imagePullPolicy: "Always"
 
 api:
