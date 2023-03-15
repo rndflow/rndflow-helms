@@ -13,6 +13,9 @@ config:
   #imagePullSecret: dockercred
   #priorityClassName: "system-cluster-critical"
   imagePullPolicy: "Always"
+  #databasePoolSize: 100
+  #databaseMaxOverflow: 500
+  #databaseEcho: true
 
 api:
   replicas: 1

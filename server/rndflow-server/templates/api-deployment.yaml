@@ -34,6 +34,18 @@ spec:
               value: '{{ default "600" .Values.api.requestTimeout }}'
             - name: API_WORKERS
               value: '{{ default "4" .Values.api.workers }}'
+            {{ if .Values.config.databasePoolSize }}
+            - name: DATABASE_POOL_SIZE
+              value: "{{ .Values.config.databasePoolSize }}"
+            {{ end }}
+            {{ if .Values.config.databaseMaxOverflow }}
+            - name: DATABASE_MAX_OVERFLOW
+              value: "{{ .Values.config.databaseMaxOverflow }}"
+            {{ end }}
+            {{ if .Values.config.databaseEcho }}
+            - name: DATABASE_ECHO
+              value: "{{ .Values.config.databaseEcho }}"
+            {{ end }}
             - name: DATABASE_URI
               valueFrom:
                 secretKeyRef:
