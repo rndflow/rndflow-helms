@@ -7,15 +7,22 @@ config:
   databaseUri:
   rabbitmqUri:
   adminEmail:
+
   logo:
   leftFooter:
   rightFooter:
+
   #imagePullSecret: dockercred
-  #priorityClassName: "system-cluster-critical"
   imagePullPolicy: "Always"
+
+  #priorityClassName: "system-cluster-critical"
+
   #databasePoolSize: 100
   #databaseMaxOverflow: 500
   #databaseEcho: true
+
+  #S3 server cleanup files safe period in days. For minutes use 0.00069 multiplier, for hours - 0.042.
+  #s3cleanup_safe_period: 1
 
 api:
   replicas: 1

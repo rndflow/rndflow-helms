@@ -84,6 +84,10 @@ spec:
                 secretKeyRef:
                   name: {{ include "rndflow-server.fullname" . }}-secrets
                   key: email_password
+            {{ if .Values.config.s3cleanup_safe_period }}
+            - name: S3SERVER_CLEANUP_SAFE_PERIOD
+              value: "{{ .Values.config.s3cleanup_safe_period }}"
+            {{ end }}
           lifecycle:
             preStop:
               exec:
