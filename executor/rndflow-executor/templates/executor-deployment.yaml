@@ -71,6 +71,19 @@ spec:
               value: {{ .Values.config.storage.pod_pvc_request_storage_size }}
             {{- end }}
 
+            {{- if .Values.config.executor_max_pods }}
+            - name: EXECUTOR_MAX_PODS
+              value: {{ .Values.config.executor_max_pods | quote }}
+            {{- end }}
+            {{- if .Values.config.executor_max_pods_pause }}
+            - name: EXECUTOR_MAX_PODS_PAUSE
+              value: {{ .Values.config.executor_max_pods_pause | quote }}
+            {{- end }}
+            {{- if .Values.config.executor_jobs_batch_size }}
+            - name: EXECUTOR_JOBS_BATCH_SIZE
+              value: {{ .Values.config.executor_jobs_batch_size | quote}}
+            {{- end }}
+
             {{- if .Values.jupyter.enabled }}
             - name: EXECUTOR_JUPYTER_ENABLED
               value: "{{ .Values.jupyter.enabled }}"
