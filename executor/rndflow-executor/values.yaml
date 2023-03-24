@@ -19,7 +19,6 @@ config:
   #executor_jobs_batch_size: 10
   #nodeName:
   #affinity:
-  #nodeSelector:
 
   resources: {}
   #  requests:

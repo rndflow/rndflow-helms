@@ -108,7 +108,3 @@ spec:
       affinity:
         {{- toYaml .Values.config.affinity | nindent 8 }}
       {{- end }}
-      {{- if .Values.config.nodeSelector }}
-      nodeSelector:
-        {{- toYaml .Values.config.nodeSelector | nindent 8 }}
-      {{- end }}
