@@ -84,3 +84,14 @@ spec:
           resources:
 {{ toYaml .Values.celery.resources | indent 12 }}
 
+      {{- if .Values.celery.nodeName }}
+      nodeName: "{{ .Values.celery.nodeName }}"
+      {{- end }}
+      {{- if .Values.celery.affinity }}
+      affinity:
+        {{- toYaml .Values.celery.affinity | nindent 8 }}
+      {{- end }}
+      {{- if .Values.celery.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.celery.nodeSelector | nindent 8 }}
+      {{- end }}

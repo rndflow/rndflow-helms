@@ -25,3 +25,14 @@ spec:
           resources:
 {{ toYaml .Values.docs.resources | indent 12 }}
 
+      {{- if .Values.docs.nodeName }}
+      nodeName: "{{ .Values.docs.nodeName }}"
+      {{- end }}
+      {{- if .Values.docs.affinity }}
+      affinity:
+        {{- toYaml .Values.docs.affinity | nindent 8 }}
+      {{- end }}
+      {{- if .Values.docs.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.docs.nodeSelector | nindent 8 }}
+      {{- end }}

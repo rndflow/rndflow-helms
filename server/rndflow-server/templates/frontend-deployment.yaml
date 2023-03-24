@@ -64,3 +64,16 @@ spec:
         - name: branding
           configMap:
             name: {{ include "rndflow-server.fullname" . }}-branding-config
+
+      {{- if .Values.frontend.nodeName }}
+      nodeName: "{{ .Values.frontend.nodeName }}"
+      {{- end }}
+      {{- if .Values.frontend.affinity }}
+      affinity:
+        {{- toYaml .Values.frontend.affinity | nindent 8 }}
+      {{- end }}
+      {{- if .Values.frontend.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.frontend.nodeSelector | nindent 8 }}
+      {{- end }}
+

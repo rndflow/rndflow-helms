@@ -36,7 +36,9 @@ api:
   #  limits:
   #     cpu: 4
   #     memory: 10Gi
-
+  #nodeName:
+  #affinity:
+  #nodeSelector:
 
 celery:
   replicas: 1
@@ -47,6 +49,9 @@ celery:
   #  limits:
   #     cpu: 1
   #     memory: 1Gi
+  #nodeName:
+  #affinity:
+  #nodeSelector:
 
 
 pgRmqProxy:
@@ -58,6 +63,9 @@ pgRmqProxy:
   #  limits:
   #     cpu: 1
   #     memory: 1Gi
+  #nodeName:
+  #affinity:
+  #nodeSelector:
 
 
 frontend:
@@ -95,6 +103,9 @@ frontend:
     #  limits:
     #     cpu: 1
     #     memory: 10Gi
+  #nodeName:
+  #affinity:
+  #nodeSelector:
 
 s3cleanup:
   enabled: true
@@ -106,7 +117,6 @@ s3cleanup:
   #  limits:
   #     cpu: 2
   #     memory: 2Gi
-
 
 builder:
   jobPrefix: "rndflow-builder"
@@ -121,7 +131,9 @@ docs:
   #  limits:
   #     cpu: 1
   #     memory: 1Gi
-
+  #nodeName:
+  #affinity:
+  #nodeSelector:
 
 email:
   server: "smtp.gmail.com"

@@ -101,3 +101,15 @@ spec:
       hostAliases:
         {{- toYaml .Values.hostAliases | nindent 8 }}
       {{- end }}
+
+      {{- if .Values.api.nodeName }}
+      nodeName: "{{ .Values.api.nodeName }}"
+      {{- end }}
+      {{- if .Values.api.affinity }}
+      affinity:
+        {{- toYaml .Values.api.affinity | nindent 8 }}
+      {{- end }}
+      {{- if .Values.api.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.api.nodeSelector | nindent 8 }}
+      {{- end }}

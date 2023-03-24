@@ -45,3 +45,16 @@ spec:
                   key: apiSecret
           resources:
 {{ toYaml .Values.pgRmqProxy.resources | indent 12 }}
+
+      {{- if .Values.pgRmqProxy.nodeName }}
+      nodeName: "{{ .Values.pgRmqProxy.nodeName }}"
+      {{- end }}
+      {{- if .Values.pgRmqProxy.affinity }}
+      affinity:
+        {{- toYaml .Values.pgRmqProxy.affinity | nindent 8 }}
+      {{- end }}
+      {{- if .Values.pgRmqProxy.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.pgRmqProxy.nodeSelector | nindent 8 }}
+      {{- end }}
+
