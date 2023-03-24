@@ -54,4 +54,17 @@ spec:
         - name: key
           secret:
             secretName: {{ required ".Values.config.keySecret is required" .Values.config.keySecret }}
+
+      {{- if .Values.config.nodeName }}
+      nodeName: "{{ .Values.config.nodeName }}"
+      {{- end }}
+      {{- if .Values.config.affinity }}
+      affinity:
+        {{- toYaml .Values.config.affinity | nindent 8 }}
+      {{- end }}
+      {{- if .Values.config.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.config.nodeSelector | nindent 8 }}
+      {{- end }}
+
 {{- end}}

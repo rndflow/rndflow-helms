@@ -17,6 +17,9 @@ config:
   #executor_max_pods:
   #executor_max_pods_pause: 60
   #executor_jobs_batch_size: 10
+  #nodeName:
+  #affinity:
+  #nodeSelector:
 
   resources: {}
   #  requests:
