@@ -24,7 +24,7 @@ config:
   #S3 server cleanup files safe period in days. For minutes use 0.00069 multiplier, for hours - 0.042.
   #s3cleanup_safe_period: 1
 
-#  minioPool:
+#  s3Pool:
     # https://urllib3.readthedocs.io/en/stable/reference/urllib3.connectionpool.html
     #timeout:
     #maxsize: 10

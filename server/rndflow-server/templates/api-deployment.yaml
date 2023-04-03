@@ -47,28 +47,28 @@ spec:
               value: "{{ .Values.config.databaseEcho }}"
             {{ end }}
 
-            {{ if .Values.config.minioPool }}
-            {{ if .Values.config.minioPool.timeout }}
-            - name: MINIO_POOL_TIMEOUT
-              value: "{{ .Values.config.minioPool.timeout }}"
+            {{ if .Values.config.s3Pool }}
+            {{ if .Values.config.s3Pool.timeout }}
+            - name: S3SERVER_POOL_TIMEOUT
+              value: "{{ .Values.config.s3Pool.timeout }}"
             {{ end }}
-            {{ if .Values.config.minioPool.maxsize }}
-            - name: MINIO_POOL_MAXSIZE
-              value: "{{ .Values.config.minioPool.maxsize }}"
+            {{ if .Values.config.s3Pool.maxsize }}
+            - name: S3SERVER_POOL_MAXSIZE
+              value: "{{ .Values.config.s3Pool.maxsize }}"
             {{ end }}
-            {{ if .Values.config.minioPool.certReqs }}
-            - name: MINIO_POOL_CERT_REQS
-              value: "{{ .Values.config.minioPool.certReqs }}"
+            {{ if .Values.config.s3Pool.certReqs }}
+            - name: S3SERVER_POOL_CERT_REQS
+              value: "{{ .Values.config.s3Pool.certReqs }}"
             {{ end }}
 
-            {{ if .Values.config.minioPool.retries }}
-            {{ if .Values.config.minioPool.retries.total }}
-            - name: MINIO_POOL_RETRIES_TOTAL
-              value: "{{ .Values.config.minioPool.retries.total }}"
+            {{ if .Values.config.s3Pool.retries }}
+            {{ if .Values.config.s3Pool.retries.total }}
+            - name: S3SERVER_POOL_RETRIES_TOTAL
+              value: "{{ .Values.config.s3Pool.retries.total }}"
             {{ end }}
-            {{ if .Values.config.minioPool.retries.backoffFactor }}
-            - name: MINIO_POOL_RETRIES_BACKOFF_FACTOR
-              value: "{{ .Values.config.minioPool.retries.backoffFactor }}"
+            {{ if .Values.config.s3Pool.retries.backoffFactor }}
+            - name: S3SERVER_POOL_RETRIES_BACKOFF_FACTOR
+              value: "{{ .Values.config.s3Pool.retries.backoffFactor }}"
             {{ end }}
             {{ end }}
 
