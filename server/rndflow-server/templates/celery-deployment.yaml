@@ -51,6 +51,34 @@ spec:
                 secretKeyRef:
                   name: {{ include "rndflow-server.fullname" . }}-secrets
                   key: apiSecret
+
+            {{ if .Values.config.minioPool }}
+            {{ if .Values.config.minioPool.timeout }}
+            - name: MINIO_POOL_TIMEOUT
+              value: "{{ .Values.config.minioPool.timeout }}"
+            {{ end }}
+            {{ if .Values.config.minioPool.maxsize }}
+            - name: MINIO_POOL_MAXSIZE
+              value: "{{ .Values.config.minioPool.maxsize }}"
+            {{ end }}
+            {{ if .Values.config.minioPool.certReqs }}
+            - name: MINIO_POOL_CERT_REQS
+              value: "{{ .Values.config.minioPool.certReqs }}"
+            {{ end }}
+
+            {{ if .Values.config.minioPool.retries }}
+            {{ if .Values.config.minioPool.retries.total }}
+            - name: MINIO_POOL_RETRIES_TOTAL
+              value: "{{ .Values.config.minioPool.retries.total }}"
+            {{ end }}
+            {{ if .Values.config.minioPool.retries.backoffFactor }}
+            - name: MINIO_POOL_RETRIES_BACKOFF_FACTOR
+              value: "{{ .Values.config.minioPool.retries.backoffFactor }}"
+            {{ end }}
+            {{ end }}
+
+            {{ end }}
+
             - name: RNDFLOW_API_SERVER
               value: {{ include "rndflow-server.fullname" . }}-api-svc:8000
             - name: BUILDER_NAMESPACE
