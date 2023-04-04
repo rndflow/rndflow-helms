@@ -52,31 +52,33 @@ spec:
                   name: {{ include "rndflow-server.fullname" . }}-secrets
                   key: apiSecret
 
-            {{ if .Values.config.s3Pool }}
-            {{ if .Values.config.s3Pool.timeout }}
+            {{ if .Values.config.s3 }}
+            {{ if .Values.config.s3.pool }}
+            {{ if .Values.config.s3.pool.timeout }}
             - name: S3SERVER_POOL_TIMEOUT
-              value: "{{ .Values.config.s3Pool.timeout }}"
+              value: "{{ .Values.config.s3.pool.timeout }}"
             {{ end }}
-            {{ if .Values.config.s3Pool.maxsize }}
+            {{ if .Values.config.s3.pool.maxsize }}
             - name: S3SERVER_POOL_MAXSIZE
-              value: "{{ .Values.config.s3Pool.maxsize }}"
+              value: "{{ .Values.config.s3.pool.maxsize }}"
             {{ end }}
-            {{ if .Values.config.s3Pool.certReqs }}
+            {{ if .Values.config.s3.pool.certReqs }}
             - name: S3SERVER_POOL_CERT_REQS
-              value: "{{ .Values.config.s3Pool.certReqs }}"
+              value: "{{ .Values.config.s3.pool.certReqs }}"
             {{ end }}
 
-            {{ if .Values.config.s3Pool.retries }}
-            {{ if .Values.config.s3Pool.retries.total }}
+            {{ if .Values.config.s3.pool.retries }}
+            {{ if .Values.config.s3.pool.retries.total }}
             - name: S3SERVER_POOL_RETRIES_TOTAL
-              value: "{{ .Values.config.s3Pool.retries.total }}"
+              value: "{{ .Values.config.s3.pool.retries.total }}"
             {{ end }}
-            {{ if .Values.config.s3Pool.retries.backoffFactor }}
+            {{ if .Values.config.s3.pool.retries.backoffFactor }}
             - name: S3SERVER_POOL_RETRIES_BACKOFF_FACTOR
-              value: "{{ .Values.config.s3Pool.retries.backoffFactor }}"
+              value: "{{ .Values.config.s3.pool.retries.backoffFactor }}"
             {{ end }}
             {{ end }}
 
+            {{ end }}
             {{ end }}
 
             - name: RNDFLOW_API_SERVER

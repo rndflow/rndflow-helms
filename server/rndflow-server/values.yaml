@@ -21,19 +21,19 @@ config:
   #databaseMaxOverflow: 500
   #databaseEcho: true
 
-  #S3 server cleanup files safe period in days. For minutes use 0.00069 multiplier, for hours - 0.042.
-  #s3cleanup_safe_period: 1
-
-#  s3Pool:
-    # https://urllib3.readthedocs.io/en/stable/reference/urllib3.connectionpool.html
-    #timeout:
-    #maxsize: 10
-    # https://docs.python.org/3/library/ssl.html#ssl.wrap_socket
-    #certReqs: 'CERT_NONE'
-    # https://urllib3.readthedocs.io/en/latest/reference/urllib3.util.html#urllib3.util.Retry
-    #retries:
-      #total: 5
-      #backoffFactor: 0.2
+  #s3:
+    # s3 server cleanup deleted files safe period in days. For minutes use 0.00069 multiplier, for hours - 0.042.
+    #cleanupSafePeriod: 1
+    #pool:
+      # https://urllib3.readthedocs.io/en/stable/reference/urllib3.connectionpool.html
+      #timeout:
+      #maxsize: 10
+      # https://docs.python.org/3/library/ssl.html#ssl.wrap_socket
+      #certReqs: 'CERT_NONE'
+      # https://urllib3.readthedocs.io/en/latest/reference/urllib3.util.html#urllib3.util.Retry
+      #retries:
+        #total: 5
+        #backoffFactor: 0.2
 api:
   replicas: 1
   workers: 4 
