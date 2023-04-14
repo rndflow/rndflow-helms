@@ -61,6 +61,11 @@ spec:
               value: {{ .Values.config.storage.pod_pvc_request_storage_size }}
             {{- end }}
 
+            {{- if .Values.config.watch_timeout }}
+            - name: EXECUTOR_WATCH_TIMEOUT
+              value: {{ .Values.config.watch_timeout | quote }}
+            {{- end }}
+
             {{- if .Values.jupyter.enabled }}
             - name: EXECUTOR_JUPYTER_SVC
               value: {{ include "rndflow-executor.fullname" . }}-jupyter-proxy-svc

@@ -19,6 +19,8 @@ config:
   #executor_jobs_batch_size: 10
   #nodeName:
   #affinity:
+  #jobs_start_pause: 0
+  #watch_timeout: 7200
 
   resources: {}
   #  requests:
@@ -34,6 +36,7 @@ config:
   #  access_modes: "ReadWriteOnce"
   #  pod_pvc_storage_class: "standard"
   #  pod_pvc_request_storage_size: "1Gi"
+  #  pod_pvc_created_pause: 2
 
 jupyter:
   enabled: false
