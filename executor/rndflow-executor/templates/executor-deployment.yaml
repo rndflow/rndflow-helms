@@ -85,11 +85,15 @@ spec:
             {{- end }}
             {{- if .Values.config.executor_jobs_batch_size }}
             - name: EXECUTOR_JOBS_BATCH_SIZE
-              value: {{ .Values.config.executor_jobs_batch_size | quote}}
+              value: {{ .Values.config.executor_jobs_batch_size | quote }}
             {{- end }}
             {{- if .Values.config.jobs_start_pause }}
             - name: EXECUTOR_JOBS_START_PAUSE
-              value: {{ .Values.config.jobs_start_pause | quote}}
+              value: {{ .Values.config.jobs_start_pause | quote }}
+            {{- end }}
+            {{- if .Values.config.restart_period }}
+            - name: EXECUTOR_RESTART_PERIOD
+              value: {{ .Values.config.restart_period | quote }}
             {{- end }}
 
             {{- if .Values.jupyter.enabled }}
