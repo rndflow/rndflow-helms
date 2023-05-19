@@ -95,6 +95,10 @@ spec:
             - name: EXECUTOR_RESTART_PERIOD
               value: {{ .Values.config.restart_period | quote }}
             {{- end }}
+            {{- if .Values.config.logging_level }}
+            - name: EXECUTOR_LOGGING_LEVEL
+              value: {{ .Values.config.logging_level }}
+            {{- end }}
 
             {{- if .Values.jupyter.enabled }}
             - name: EXECUTOR_JUPYTER_ENABLED

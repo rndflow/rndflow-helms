@@ -22,6 +22,7 @@ config:
   #jobs_start_pause: 0
   #watch_timeout: 7200
   #restart_period: 0
+  #logging_level: "INFO"
 
   resources: {}
   #  requests:

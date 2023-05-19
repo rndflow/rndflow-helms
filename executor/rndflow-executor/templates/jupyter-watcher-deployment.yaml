@@ -44,6 +44,11 @@ spec:
               value: {{ include "rndflow-executor.fullname" . }}-jupyter-proxy-svc
             - name: EXECUTOR_JUPYTER_IDLE_LIMIT
               value: "{{ .Values.jupyter.idleLimit }}"
+            {{- if .Values.config.logging_level }}
+            - name: EXECUTOR_LOGGING_LEVEL
+              value: {{ .Values.config.logging_level }}
+            {{- end }}
+
           resources:
 {{ toYaml .Values.jupyter.resources | indent 12 }}
           volumeMounts:

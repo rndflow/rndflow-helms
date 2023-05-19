@@ -40,6 +40,11 @@ spec:
               value: {{ .Release.Name }}-job
             - name: PYTHONUNBUFFERED
               value: "yes"
+            {{- if .Values.config.logging_level }}
+            - name: EXECUTOR_LOGGING_LEVEL
+              value: {{ .Values.config.logging_level }}
+            {{- end }}
+
             {{- if .Values.jupyter.enabled }}
             - name: EXECUTOR_JUPYTER_SVC
               value: {{ include "rndflow-executor.fullname" . }}-jupyter-proxy-svc

@@ -65,6 +65,10 @@ spec:
             - name: EXECUTOR_WATCH_TIMEOUT
               value: {{ .Values.config.watch_timeout | quote }}
             {{- end }}
+            {{- if .Values.config.logging_level }}
+            - name: EXECUTOR_LOGGING_LEVEL
+              value: {{ .Values.config.logging_level }}
+            {{- end }}
 
             {{- if .Values.jupyter.enabled }}
             - name: EXECUTOR_JUPYTER_SVC

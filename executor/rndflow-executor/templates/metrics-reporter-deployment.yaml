@@ -39,6 +39,11 @@ spec:
               value: {{ .Release.Name }}-job
             - name: PYTHONUNBUFFERED
               value: "yes"
+            {{- if .Values.config.logging_level }}
+            - name: EXECUTOR_LOGGING_LEVEL
+              value: {{ .Values.config.logging_level }}
+            {{- end }}
+
           resources:
 {{ toYaml .Values.config.resources | indent 12 }}
           volumeMounts:
