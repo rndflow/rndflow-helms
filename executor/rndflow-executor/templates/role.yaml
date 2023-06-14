@@ -11,6 +11,15 @@ rules:
       - get
       - create
       - delete
+  - apiGroups: ["batch"]
+    resources:
+      - cronjobs
+    verbs:
+      - list
+      - get
+      - create
+      - delete
+      - patch
   - apiGroups: [""]
     resources:
       - pods
