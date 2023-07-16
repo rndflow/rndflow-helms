@@ -52,7 +52,8 @@ spec:
                   name: {{ include "rndflow-server.fullname" . }}-secrets
                   key: apiSecret
 
-            {{ if and .Values.config.bot .Values.config.bot.telegram }}
+            {{ if .Values.config.bot }}
+            {{ if .Values.config.bot.telegram }}
             {{ if .Values.config.bot.telegram.name }}
             - name: TELEGRAM_BOT_NAME
               value: "{{ .Values.config.bot.telegram.name }}"
@@ -71,6 +72,7 @@ spec:
             {{ if .Values.config.bot.telegram.subscriptionKeyValidity }}
             - name: TELEGRAM_BOT_SUBSCRIPTION_KEY_VALIDITY
               value: "{{ .Values.config.bot.telegram.subscriptionKeyValidity }}"
+            {{ end }}
             {{ end }}
             {{ end }}
 
