@@ -1,4 +1,6 @@
-{{- if and .Values.config.bot .Values.config.bot.telegram .Values.config.bot.telegram.name .Values.config.bot.telegram.token }}
+{{- if .Values.config.bot }}
+{{- if .Values.config.bot.telegram }}
+{{- if and .Values.config.bot.telegram.name .Values.config.bot.telegram.token }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -117,4 +119,6 @@ spec:
       nodeSelector:
         {{- toYaml .Values.tbot.nodeSelector | nindent 8 }}
       {{- end }}
+{{- end }}
+{{- end }}
 {{- end }}
