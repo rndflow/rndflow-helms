@@ -52,6 +52,28 @@ spec:
                   name: {{ include "rndflow-server.fullname" . }}-secrets
                   key: apiSecret
 
+            {{ if and .Values.config.bot .Values.config.bot.telegram }}
+            {{ if .Values.config.bot.telegram.name }}
+            - name: TELEGRAM_BOT_NAME
+              value: "{{ .Values.config.bot.telegram.name }}"
+            {{ end }}
+            {{ if .Values.config.bot.telegram.token }}
+            - name: TELEGRAM_BOT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "rndflow-server.fullname" . }}-secrets
+                  key: telegramBotToken
+            {{ end }}
+            {{ if .Values.config.bot.telegram.timeout }}
+            - name: TELEGRAM_BOT_TIMEOUT
+              value: "{{ .Values.config.bot.telegram.timeout }}"
+            {{ end }}
+            {{ if .Values.config.bot.telegram.subscriptionKeyValidity }}
+            - name: TELEGRAM_BOT_SUBSCRIPTION_KEY_VALIDITY
+              value: "{{ .Values.config.bot.telegram.subscriptionKeyValidity }}"
+            {{ end }}
+            {{ end }}
+
             {{ if .Values.config.s3 }}
             {{ if .Values.config.s3.pool }}
             {{ if .Values.config.s3.pool.timeout }}
