@@ -31,6 +31,10 @@ spec:
           env:
             - name: PYTHONUNBUFFERED
               value: "yes"
+            - name: CELERY_WORKERS
+              value: '{{ default "1" .Values.celery.workers }}'
+            - name: CELERY_LOG_LEVEL
+              value: '{{ default "INFO" .Values.celery.logLevel }}'
             - name: DATABASE_URI
               valueFrom:
                 secretKeyRef:

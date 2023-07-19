@@ -59,6 +59,8 @@ api:
   #nodeSelector:
 
 celery:
+  #workers: 1
+  #logLevel: "INFO"
   replicas: 1
   resources: {}
   #  requests:
