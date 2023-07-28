@@ -91,6 +91,10 @@ spec:
             - name: EXECUTOR_JOBS_START_PAUSE
               value: {{ .Values.config.jobs_start_pause | quote }}
             {{- end }}
+            {{- if .Values.config.jobs_image_pull_policy }}
+            - name: EXECUTOR_JOBS_IMAGE_PULL_POLICY
+              value: {{ .Values.config.jobs_image_pull_policy | quote }}
+            {{- end }}
             {{- if .Values.config.restart_period }}
             - name: EXECUTOR_RESTART_PERIOD
               value: {{ .Values.config.restart_period | quote }}
