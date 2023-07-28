@@ -41,6 +41,8 @@ config:
       #retries:
         #total: 5
         #backoffFactor: 0.2
+  #options:
+    #useBulkSave: true
 
 api:
   replicas: 1

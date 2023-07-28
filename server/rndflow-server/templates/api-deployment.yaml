@@ -103,6 +103,13 @@ spec:
             {{ end }}
             {{ end }}
 
+            {{ if .Values.config.options }}
+            {{ if  hasKey .Values.config.options "useBulkSave" }}
+            - name: OPTIONS_USE_BULK_SAVE
+              value: "{{ .Values.config.options.useBulkSave }}"
+            {{ end }}
+            {{ end }}
+
             - name: DATABASE_URI
               valueFrom:
                 secretKeyRef:
