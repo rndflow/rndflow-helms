@@ -95,6 +95,10 @@ spec:
             - name: EXECUTOR_JOBS_IMAGE_PULL_POLICY
               value: {{ .Values.config.jobs_image_pull_policy | quote }}
             {{- end }}
+            {{- if .Values.config.jobs_image_pull_secret }}
+            - name: EXECUTOR_JOBS_IMAGE_PULL_SECRET
+              value: {{ .Values.config.jobs_image_pull_secret | quote }}
+            {{- end }}
             {{- if .Values.config.restart_period }}
             - name: EXECUTOR_RESTART_PERIOD
               value: {{ .Values.config.restart_period | quote }}
