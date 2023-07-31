@@ -94,6 +94,7 @@ frontend:
   # Enable root image user  
   imageRootMode: false 
   ingress:
+    class: nginx
     enabled: false
     hostname:
     annotations: {}
