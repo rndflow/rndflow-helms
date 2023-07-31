@@ -47,6 +47,7 @@ jupyter:
   externalHost:
   idleLimit: 24
   ingress:
+    class: nginx
     hostname:
     path: /jupyter
     tls:
