@@ -109,6 +109,17 @@ spec:
             {{ end }}
             {{ end }}
 
+            {{ if .Values.config.options }}
+            {{ if  hasKey .Values.config.options "useBulkSave" }}
+            - name: OPTIONS_USE_BULK_SAVE
+              value: "{{ .Values.config.options.useBulkSave }}"
+            {{ end }}
+            {{ if  hasKey .Values.config.options "useCelerySave" }}
+            - name: OPTIONS_USE_CELERY_SAVE
+              value: "{{ .Values.config.options.useCelerySave }}"
+            {{ end }}
+            {{ end }}
+
             - name: RNDFLOW_API_SERVER
               value: {{ include "rndflow-server.fullname" . }}-api-svc:8000
             - name: BUILDER_NAMESPACE

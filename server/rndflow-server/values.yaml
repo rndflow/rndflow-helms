@@ -43,6 +43,7 @@ config:
         #backoffFactor: 0.2
   #options:
     #useBulkSave: true
+    #useCelerySave: true
 
 api:
   replicas: 1
