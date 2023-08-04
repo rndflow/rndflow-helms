@@ -13,7 +13,8 @@ config:
   rightFooter:
 
   #imagePullSecret: dockercred
-  imagePullPolicy: "Always"
+  # https://kubernetes.io/docs/concepts/containers/images/
+  imagePullPolicy: "IfNotPresent"
 
   #priorityClassName: "system-cluster-critical"
 

@@ -12,16 +12,22 @@ config:
   keySecret:
   nodeSelector:
   gpuVendor: "nvidia"
+
   #imagePullSecret: dockercred
-  imagePullPolicy: "Always"
+  # https://kubernetes.io/docs/concepts/containers/images/
+  imagePullPolicy: "IfNotPresent"
+
   #executor_max_pods:
   #executor_max_pods_pause: 60
   #executor_jobs_batch_size: 10
+
   #nodeName:
   #affinity:
+
   #jobs_start_pause: 0
   #jobs_image_pull_policy: "Always"
   #jobs_image_pull_secret: ""
+
   #watch_timeout: 7200
   #restart_period: 0
   #logging_level: "INFO"
