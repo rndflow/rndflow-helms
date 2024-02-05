@@ -44,6 +44,11 @@ rules:
     verbs:
       - list
       - watch
+  - apiGroups: [""]
+    resources:
+      - nodes
+    verbs:
+      - list
   - apiGroups: ["metrics.k8s.io"]
     resources:
       - nodes
