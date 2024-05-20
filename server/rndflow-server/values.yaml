@@ -61,6 +61,7 @@ api:
   #nodeName:
   #affinity:
   #nodeSelector:
+  #anyioThreadLimiter: 100
 
 celery:
   #workers: 1

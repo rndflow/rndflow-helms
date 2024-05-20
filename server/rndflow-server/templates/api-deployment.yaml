@@ -46,6 +46,10 @@ spec:
             - name: DATABASE_ECHO
               value: "{{ .Values.config.databaseEcho }}"
             {{ end }}
+            {{ if .Values.api.anyioThreadLimiter}}
+            - name: ANYIO_THREAD_LIMITER
+              value: "{{ .Values.api.anyioThreadLimiter }}"
+            {{ end }}
 
             {{ if .Values.config.bot }}
             {{ if .Values.config.bot.telegram }}
