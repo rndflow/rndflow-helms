@@ -30,6 +30,8 @@ spec:
           env:
             - name: EXECUTOR_API_SERVER
               value: {{ required ".Values.config.apiHost is required" .Values.config.apiHost }}
+            - name: EXECUTOR_API_SERVER_DIRECT
+              value: {{ .Values.config.apiHostDirect | default "" }}
             - name: EXECUTOR_LABEL
               value: {{ .Values.config.executorLabel }}
             - name: EXECUTOR_NAMESPACE

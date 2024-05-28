@@ -8,11 +8,11 @@ config:
   replicas: 1
   defaultJobImage: "rndflow/job.py:latest"
   apiHost:
+  apiHostDirect:
   executorLabel:
   keySecret:
   nodeSelector:
   gpuVendor: "nvidia"
-
   #imagePullSecret: dockercred
   # https://kubernetes.io/docs/concepts/containers/images/
   imagePullPolicy: "IfNotPresent"
