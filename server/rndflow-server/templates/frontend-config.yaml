@@ -42,11 +42,11 @@ data:
       }
 
       upstream api_server {
-        server {{ include "rndflow-server.fullname" . }}-api-svc:8000 max_fails=3 fail_timeout=5s;
+        server {{ include "rndflow-server.fullname" . }}-api-svc:8000 max_fails={{ default "1" .Values.frontend.apiRedirectMaxFails }} fail_timeout={{ default "5s" .Values.frontend.apiRedirectFailTimeout }};
       }
 
       upstream docs_server {
-        server {{ include "rndflow-server.fullname" . }}-docs-svc:8080 max_fails=3 fail_timeout=5s;
+        server {{ include "rndflow-server.fullname" . }}-docs-svc:8080 max_fails={{ default "1" .Values.frontend.apiRedirectMaxFails }} fail_timeout={{ default "5s" .Values.frontend.apiRedirectFailTimeout }};
       }
 
       server {
