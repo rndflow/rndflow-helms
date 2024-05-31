@@ -19,6 +19,7 @@ config:
   #priorityClassName: "system-cluster-critical"
 
   #databasePoolSize: 100
+  #databasePoolTimeout: 30
   #databaseMaxOverflow: 500
   #databaseEcho: true
 

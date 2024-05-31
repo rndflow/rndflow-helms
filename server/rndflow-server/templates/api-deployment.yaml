@@ -38,6 +38,10 @@ spec:
             - name: DATABASE_POOL_SIZE
               value: "{{ .Values.config.databasePoolSize }}"
             {{ end }}
+            {{ if .Values.config.databasePoolTimeout }}
+            - name: DATABASE_POOL_TIMEOUT
+              value: "{{ .Values.config.databasePoolTimeout }}"
+            {{ end }}
             {{ if .Values.config.databaseMaxOverflow }}
             - name: DATABASE_MAX_OVERFLOW
               value: "{{ .Values.config.databaseMaxOverflow }}"

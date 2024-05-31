@@ -90,6 +90,10 @@ spec:
             - name: S3SERVER_POOL_MAXSIZE
               value: "{{ .Values.config.s3.pool.maxsize }}"
             {{ end }}
+            {{ if .Values.config.databasePoolTimeout }}
+             - name: DATABASE_POOL_TIMEOUT
+               value: "{{ .Values.config.databasePoolTimeout }}"
+            {{ end }}
             {{ if .Values.config.s3.pool.certReqs }}
             - name: S3SERVER_POOL_CERT_REQS
               value: "{{ .Values.config.s3.pool.certReqs }}"
