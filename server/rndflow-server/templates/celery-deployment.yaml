@@ -56,6 +56,23 @@ spec:
                   name: {{ include "rndflow-server.fullname" . }}-secrets
                   key: apiSecret
 
+            {{ if .Values.config.databasePoolSize }}
+            - name: DATABASE_POOL_SIZE
+              value: "{{ .Values.config.databasePoolSize }}"
+            {{ end }}
+            {{ if .Values.config.databasePoolTimeout }}
+            - name: DATABASE_POOL_TIMEOUT
+              value: "{{ .Values.config.databasePoolTimeout }}"
+            {{ end }}
+            {{ if .Values.config.databaseMaxOverflow }}
+            - name: DATABASE_MAX_OVERFLOW
+              value: "{{ .Values.config.databaseMaxOverflow }}"
+            {{ end }}
+            {{ if .Values.config.databaseEcho }}
+            - name: DATABASE_ECHO
+              value: "{{ .Values.config.databaseEcho }}"
+            {{ end }}
+
             {{ if .Values.config.bot }}
             {{ if .Values.config.bot.telegram }}
             {{ if .Values.config.bot.telegram.name }}
@@ -89,10 +106,6 @@ spec:
             {{ if .Values.config.s3.pool.maxsize }}
             - name: S3SERVER_POOL_MAXSIZE
               value: "{{ .Values.config.s3.pool.maxsize }}"
-            {{ end }}
-            {{ if .Values.config.databasePoolTimeout }}
-             - name: DATABASE_POOL_TIMEOUT
-               value: "{{ .Values.config.databasePoolTimeout }}"
             {{ end }}
             {{ if .Values.config.s3.pool.certReqs }}
             - name: S3SERVER_POOL_CERT_REQS
