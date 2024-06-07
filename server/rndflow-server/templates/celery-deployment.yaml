@@ -56,21 +56,21 @@ spec:
                   name: {{ include "rndflow-server.fullname" . }}-secrets
                   key: apiSecret
 
-            {{ if .Values.config.databasePoolSize }}
+            {{ if .Values.celery.databasePoolSize }}
             - name: DATABASE_POOL_SIZE
-              value: "{{ .Values.config.databasePoolSize }}"
+              value: "{{ .Values.celery.databasePoolSize }}"
             {{ end }}
-            {{ if .Values.config.databasePoolTimeout }}
+            {{ if .Values.celery.databasePoolTimeout }}
             - name: DATABASE_POOL_TIMEOUT
-              value: "{{ .Values.config.databasePoolTimeout }}"
+              value: "{{ .Values.celery.databasePoolTimeout }}"
             {{ end }}
-            {{ if .Values.config.databaseMaxOverflow }}
+            {{ if .Values.celery.databaseMaxOverflow }}
             - name: DATABASE_MAX_OVERFLOW
-              value: "{{ .Values.config.databaseMaxOverflow }}"
+              value: "{{ .Values.celery.databaseMaxOverflow }}"
             {{ end }}
-            {{ if .Values.config.databaseEcho }}
+            {{ if .Values.celery.databaseEcho }}
             - name: DATABASE_ECHO
-              value: "{{ .Values.config.databaseEcho }}"
+              value: "{{ .Values.celery.databaseEcho }}"
             {{ end }}
 
             {{ if .Values.config.bot }}

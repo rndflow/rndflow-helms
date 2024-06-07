@@ -67,6 +67,10 @@ api:
 celery:
   #workers: 1
   #logLevel: "INFO"
+  databasePoolSize: 2
+  databasePoolTimeout: 30
+  databaseMaxOverflow: 5
+  databaseEcho: false
   replicas: 1
   resources: {}
   #  requests:
