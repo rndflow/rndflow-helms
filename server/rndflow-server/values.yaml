@@ -35,7 +35,8 @@ config:
     #cleanupSafePeriod: 1
     #pool:
       # https://urllib3.readthedocs.io/en/stable/reference/urllib3.connectionpool.html
-      #timeout:
+      #timeout_connect: 60
+      #timeout_read: 300
       #maxsize: 10
       # https://docs.python.org/3/library/ssl.html#ssl.wrap_socket
       #certReqs: 'CERT_NONE'

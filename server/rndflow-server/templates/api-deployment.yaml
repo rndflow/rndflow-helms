@@ -85,9 +85,13 @@ spec:
               value: "{{ .Values.config.s3.cleanupSafePeriod }}"
             {{ end }}
             {{ if .Values.config.s3.pool }}
-            {{ if .Values.config.s3.pool.timeout }}
-            - name: S3SERVER_POOL_TIMEOUT
-              value: "{{ .Values.config.s3.pool.timeout }}"
+            {{ if .Values.config.s3.pool.timeout_connect }}
+            - name: S3SERVER_POOL_TIMEOUT_CONNECT
+              value: "{{ .Values.config.s3.pool.timeout_connect }}"
+            {{ end }}
+            {{ if .Values.config.s3.pool.timeout_read }}
+            - name: S3SERVER_POOL_TIMEOUT_READ
+              value: "{{ .Values.config.s3.pool.timeout_read }}"
             {{ end }}
             {{ if .Values.config.s3.pool.maxsize }}
             - name: S3SERVER_POOL_MAXSIZE
