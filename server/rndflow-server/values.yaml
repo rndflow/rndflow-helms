@@ -50,7 +50,16 @@ config:
 
 api:
   replicas: 1
-  workers: 4 
+
+  gunicorn: # https://docs.gunicorn.org/en/stable/settings.html#worker-processes
+    workers: 4
+    #threads:
+    #workerConnections:
+    #maxRequests:
+    #timeout:
+    #gracefulTimeout:
+    #keepalive:
+
   image: "rndflow/api:latest"
   secret:
   resources: {}

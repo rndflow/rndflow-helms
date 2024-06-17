@@ -30,10 +30,6 @@ spec:
           env:
             - name: PYTHONUNBUFFERED
               value: "yes"
-            - name: API_REQUEST_TIMEOUT
-              value: '{{ default "600" .Values.api.requestTimeout }}'
-            - name: API_WORKERS
-              value: '{{ default "4" .Values.api.workers }}'
             {{ if .Values.config.databasePoolSize }}
             - name: DATABASE_POOL_SIZE
               value: "{{ .Values.config.databasePoolSize }}"
@@ -54,6 +50,21 @@ spec:
             - name: ANYIO_THREAD_LIMITER
               value: "{{ .Values.api.anyioThreadLimiter }}"
             {{ end }}
+
+            - name: GUNICORN_WORKERS
+              value: '{{ default "4" .Values.api.gunicorn.workers }}'
+            - name: GUNICORN_THREADS
+              value: '{{ default "1" .Values.api.gunicorn.threads }}'
+            - name: GUNICORN_WORKER_CONNECTIONS
+              value: '{{ default "1000" .Values.api.gunicorn.workerConnections }}'
+            - name: GUNICORN_MAX_REQUESTS
+              value: '{{ default "0" .Values.api.gunicorn.maxRequests }}'
+            - name: GUNICORN_TIMEOUT
+              value: '{{ default "30" .Values.api.gunicorn.timeout }}'
+            - name: GUNICORN_GRACEFUL_TIMEOUT
+              value: '{{ default "30" .Values.api.gunicorn.gracefulTimeout }}'
+            - name: GUNICORN_KEEPALIVE
+              value: '{{ default "2" .Values.api.gunicorn.keepalive }}'
 
             {{ if .Values.config.bot }}
             {{ if .Values.config.bot.telegram }}
