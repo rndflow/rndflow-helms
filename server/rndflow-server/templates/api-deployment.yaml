@@ -135,6 +135,10 @@ spec:
             - name: OPTIONS_USE_CELERY_SAVE
               value: "{{ .Values.config.options.useCelerySave }}"
             {{ end }}
+            {{ if  hasKey .Values.config.options "checkS3FilesWithDatabase" }}
+            - name: OPTIONS_CHECK_S3FILES_WITH_DATABASE
+              value: "{{ .Values.config.options.checkS3FilesWithDatabase }}"
+            {{ end }}
             {{ end }}
 
             - name: DATABASE_URI

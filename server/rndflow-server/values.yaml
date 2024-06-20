@@ -47,6 +47,7 @@ config:
   #options:
     #useBulkSave: true
     #useCelerySave: true
+    #checkS3FilesWithDatabase: false
 
 api:
   replicas: 1
