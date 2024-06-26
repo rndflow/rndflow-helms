@@ -139,10 +139,6 @@ spec:
             - name: OPTIONS_CHECK_S3FILES_WITH_DATABASE
               value: "{{ .Values.config.options.checkS3FilesWithDatabase }}"
             {{ end }}
-            {{ if  hasKey .Values.config.options "useS3RegionsCache" }}
-            - name: OPTIONS_USE_S3REGIONS_CACHE
-              value: "{{ .Values.config.options.useS3RegionsCache }}"
-            {{ end }}
             {{ end }}
 
             - name: DATABASE_URI
